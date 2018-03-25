@@ -127,7 +127,12 @@ Private Declare Ansi Function WritePrivateProfileString Lib "kernel32.dll" Alias
         'strFile = Vollständiger Pfad zur INI-Datei
         Return (Not (WritePrivateProfileString(strSection, strKey, strValue, strFile) = 0))
     End Function
-    Private Sub TextBox9_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox9.KeyPress
 
+    Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
+        Application.Exit()
+    End Sub
+
+    Private Sub ToolStripTextBox3_Click(sender As Object, e As EventArgs) Handles ToolStripTextBox3.Click
+        MessageBox.Show("F1 Challenge 99-02 by ISI" & vbCrLf & "Config Editor by haunetal1990", "Credits", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 End Class
