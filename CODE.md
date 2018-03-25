@@ -6,6 +6,8 @@ What we need?
 - 34 Textboxes
 - 1 Combobox
 - 3 GroupBox
+- 1 ToolStrip
+- 1 TabControl
 
 Imports System
 Imports System.Xml
