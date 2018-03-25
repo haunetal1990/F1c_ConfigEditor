@@ -9,6 +9,9 @@ What we need?
 - 1 ToolStrip
 - 1 TabControl
 
+Plugin:
+- ResXManager
+
 Imports System
 Imports System.Xml
 
@@ -56,6 +59,7 @@ Private Declare Ansi Function WritePrivateProfileString Lib "kernel32.dll" Alias
         INI_WriteValueToFile("AUTOLAUNCH", "LAUNCHTIME", TextBox9.Text, ".\config.ini")
 
         INI_WriteValueToFile("VERSION", "VERSION", TextBox10.Text, ".\config.ini")
+        MessageBox.Show("Save", "Save", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
