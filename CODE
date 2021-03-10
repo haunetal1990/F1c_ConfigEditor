@@ -178,10 +178,6 @@ Public Class Form1
         MessageBox.Show("F1 Challenge 99-02 by ISI" & vbCrLf & "Config Editor by haunetal1990" & vbCrLf & "thanks to Òscar Luis for spanish language", "Credits", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
-    Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
-        System.Diagnostics.Process.Start("http://imagespaceinc.com")
-    End Sub
-
     Private Sub ExitToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem1.Click
         Application.Exit()
     End Sub
@@ -348,10 +344,6 @@ Public Class Form1
                 ' alle anderen Eingaben unterdrücken
                 e.Handled = True
         End Select
-    End Sub
-
-    Private Sub LinkLabel2_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
-        System.Diagnostics.Process.Start("http://race4sim.com")
     End Sub
 
     Private Sub ComboBox4_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox4.SelectedIndexChanged
