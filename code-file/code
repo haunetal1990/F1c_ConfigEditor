@@ -1,0 +1,357 @@
+What we need?
+- 1 Button 
+- 34 Textboxes
+- 11 Combobox
+- 3 GroupBox
+- 1 ToolStrip
+- 1 TabControl
+
+Plugin:
+- ResXManager
+
+Imports System
+Imports System.Xml
+Imports System.Management
+
+Public Class Form1
+    Private Declare Ansi Function GetPrivateProfileString Lib "kernel32.dll" Alias "GetPrivateProfileStringA" (ByVal lpApplicationName As String, ByVal lpKeyName As String, ByVal lpDefault As String, ByVal lpReturnedString As String, ByVal nSize As Int32, ByVal lpFileName As String) As Int32
+    Private Declare Ansi Function WritePrivateProfileString Lib "kernel32.dll" Alias "WritePrivateProfileStringA" (ByVal lpApplicationName As String, ByVal lpKeyName As String, ByVal lpString As String, ByVal lpFileName As String) As Int32
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
+        INI_WriteValueToFile("COMPONENTS", "SEASONDIR", Textbox1.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "SOUNDDIR", Textbox2.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "VEHICLESOUND", TextBox3.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "OPTIONSANIM", TextBox4.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "OPTIONSFLAGS", TextBox5.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "OPTIONSSOUNDS", TextBox11.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "OPTIONSDIR", TextBox13.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "REPLAYDIR", TextBox8.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "MOVIEDIR", TextBox14.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "TRACKSDIR", TextBox12.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "VEHICLESDIR", TextBox16.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "DRIVERSDIR", TextBox18.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "LOGDIR", TextBox15.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "SAVEDIR", TextBox19.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "MUSICDIR", TextBox17.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "CAMERAEDITORRESOURCEDIR", TextBox25.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "GRIDSIZE", TextBox27.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "CPURATING", ComboBox3.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "SYSTEMRAM", ComboBox11.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "VIDEORAM", TextBox21.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "OBJDETAIL", ComboBox9.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "TEXDETAIL", ComboBox10.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "VIDEOGUID", TextBox22.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "VIDEODRIVER", TextBox29.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "VIDEOMODE", TextBox28.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "VIDEOREFRESH", ComboBox2.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "WINDOWEDMODE", ComboBox4.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "RUNBENCHMARKS", ComboBox5.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "FSAA", ComboBox6.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "VSYNC", ComboBox7.Text, ".\config.ini")
+        INI_WriteValueToFile("COMPONENTS", "VBSTRATEGY", ComboBox8.Text, ".\config.ini")
+
+        INI_WriteValueToFile("INSTALL", "INSTALLFROM", TextBox6.Text, ".\config.ini")
+        INI_WriteValueToFile("INSTALL", "INSTALLTO", TextBox7.Text, ".\config.ini")
+
+        INI_WriteValueToFile("AUTOLAUNCH", "MODE", ComboBox1.Text, ".\config.ini")
+        INI_WriteValueToFile("AUTOLAUNCH", "LAUNCHTIME", TextBox9.Text, ".\config.ini")
+
+        INI_WriteValueToFile("VERSION", "VERSION", TextBox10.Text, ".\config.ini")
+        MessageBox.Show("Save", "Save", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+    End Sub
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim objQuery As New ObjectQuery("SELECT * FROM Win32_VideoController")
+        Dim objSearcher As New ManagementObjectSearcher(objQuery)
+
+        For Each MemObj As ManagementObject In objSearcher.Get
+            TextBox20.Text = MemObj("VideoProcessor")
+
+            If IO.File.Exists(".\Config.ini") Then
+                Textbox1.Text = INI_ReadValueFromFile("COMPONENTS", "SEASONDIR", Textbox1.Text, ".\config.ini")
+                Textbox2.Text = INI_ReadValueFromFile("COMPONENTS", "SOUNDDIR", Textbox2.Text, ".\config.ini")
+                TextBox3.Text = INI_ReadValueFromFile("COMPONENTS", "VEHICLESOUND", TextBox3.Text, ".\config.ini")
+                TextBox4.Text = INI_ReadValueFromFile("COMPONENTS", "OPTIONSANIM", TextBox4.Text, ".\config.ini")
+                TextBox5.Text = INI_ReadValueFromFile("COMPONENTS", "OPTIONSFLAGS", TextBox5.Text, ".\config.ini")
+                TextBox11.Text = INI_ReadValueFromFile("COMPONENTS", "OPTIONSSOUNDS", TextBox11.Text, ".\config.ini")
+                TextBox13.Text = INI_ReadValueFromFile("COMPONENTS", "OPTIONSDIR", TextBox13.Text, ".\config.ini")
+                TextBox8.Text = INI_ReadValueFromFile("COMPONENTS", "REPLAYDIR", TextBox8.Text, ".\config.ini")
+                TextBox14.Text = INI_ReadValueFromFile("COMPONENTS", "MOVIEDIR", TextBox14.Text, ".\config.ini")
+                TextBox12.Text = INI_ReadValueFromFile("COMPONENTS", "TRACKSDIR", TextBox12.Text, ".\config.ini")
+                TextBox16.Text = INI_ReadValueFromFile("COMPONENTS", "VEHICLESDIR", TextBox16.Text, ".\config.ini")
+                TextBox18.Text = INI_ReadValueFromFile("COMPONENTS", "DRIVERSDIR", TextBox18.Text, ".\config.ini")
+                TextBox15.Text = INI_ReadValueFromFile("COMPONENTS", "LOGDIR", TextBox15.Text, ".\config.ini")
+                TextBox19.Text = INI_ReadValueFromFile("COMPONENTS", "SAVEDIR", TextBox19.Text, ".\config.ini")
+                TextBox17.Text = INI_ReadValueFromFile("COMPONENTS", "MUSICDIR", TextBox17.Text, ".\config.ini")
+                TextBox25.Text = INI_ReadValueFromFile("COMPONENTS", "CAMERAEDITORRESOURCEDIR", TextBox25.Text, ".\config.ini")
+                TextBox27.Text = INI_ReadValueFromFile("COMPONENTS", "GRIDSIZE", TextBox27.Text, ".\config.ini")
+                ComboBox3.Text = INI_ReadValueFromFile("COMPONENTS", "CPURATING", ComboBox3.Text, ".\config.ini")
+                ComboBox11.Text = INI_ReadValueFromFile("COMPONENTS", "SYSTEMRAM", ComboBox11.Text, ".\config.ini")
+                TextBox21.Text = INI_ReadValueFromFile("COMPONENTS", "VIDEORAM", TextBox21.Text, ".\config.ini")
+                ComboBox9.Text = INI_ReadValueFromFile("COMPONENTS", "OBJDETAIL", ComboBox9.Text, ".\config.ini")
+                ComboBox10.Text = INI_ReadValueFromFile("COMPONENTS", "TEXDETAIL", ComboBox10.Text, ".\config.ini")
+                TextBox22.Text = INI_ReadValueFromFile("COMPONENTS", "VIDEOGUID", TextBox22.Text, ".\config.ini")
+                TextBox29.Text = INI_ReadValueFromFile("COMPONENTS", "VIDEODRIVER", TextBox29.Text, ".\config.ini")
+                TextBox28.Text = INI_ReadValueFromFile("COMPONENTS", "VIDEOMODE", TextBox28.Text, ".\config.ini")
+                ComboBox2.Text = INI_ReadValueFromFile("COMPONENTS", "VIDEOREFRESH", ComboBox2.Text, ".\config.ini")
+                ComboBox4.Text = INI_ReadValueFromFile("COMPONENTS", "WINDOWEDMODE", ComboBox4.Text, ".\config.ini")
+                ComboBox5.Text = INI_ReadValueFromFile("COMPONENTS", "RUNBENCHMARKS", ComboBox5.Text, ".\config.ini")
+                ComboBox6.Text = INI_ReadValueFromFile("COMPONENTS", "FSAA", ComboBox6.Text, ".\config.ini")
+                ComboBox7.Text = INI_ReadValueFromFile("COMPONENTS", "VSYNC", ComboBox7.Text, ".\config.ini")
+                ComboBox8.Text = INI_ReadValueFromFile("COMPONENTS", "VBSTRATEGY", ComboBox8.Text, ".\config.ini")
+
+                TextBox6.Text = INI_ReadValueFromFile("INSTALL", "INSTALLFROM", TextBox6.Text, ".\config.ini")
+                TextBox7.Text = INI_ReadValueFromFile("INSTALL", "INSTALLTO", TextBox7.Text, ".\config.ini")
+
+                ComboBox1.Text = INI_ReadValueFromFile("AUTOLAUNCH", "MODE", ComboBox1.Text, ".\config.ini")
+                TextBox9.Text = INI_ReadValueFromFile("AUTOLAUNCH", "LAUNCHTIME", TextBox9.Text, ".\config.ini")
+
+                TextBox10.Text = INI_ReadValueFromFile("VERSION", "VERSION", TextBox10.Text, ".\config.ini")
+            Else
+                MessageBox.Show("Original Config.ini is not avaible ! Check the folder path", "ERROR: 100")
+            End If
+        Next
+    End Sub
+
+    Private Function INI_ReadValueFromFile(ByVal strSection As String, ByVal strKey As String, ByVal strDefault As String, ByVal strFile As String) As String
+        'Funktion zum Lesen
+        'strSection = Sektion in der INI-Datei
+        'strKey = Name des Schlüssels
+        'strDefault = Standardwert, wird zurückgegeben, wenn der Wert in der INI-Datei nicht gefunden wurde
+        'strFile = Vollständiger Pfad zur INI-Datei
+        Dim strTemp As String = Space(1024), lLength As Integer
+        lLength = GetPrivateProfileString(strSection, strKey, strDefault, strTemp, strTemp.Length, strFile)
+        Return (strTemp.Substring(0, lLength))
+    End Function
+
+    Public Function INI_WriteValueToFile(ByVal strSection As String, ByVal strKey As String, ByVal strValue As String, ByVal strFile As String) As Boolean
+        'Funktion zum Schreiben
+        'strSection = Sektion in der INI-Datei
+        'strKey = Name des Schlüssels
+        'strValue = Wert, der geschrieben werden soll
+        'strFile = Vollständiger Pfad zur INI-Datei
+        Return (Not (WritePrivateProfileString(strSection, strKey, strValue, strFile) = 0))
+    End Function
+
+    Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
+        Textbox1.Clear()
+        Textbox2.Clear()
+        TextBox3.Clear()
+        TextBox4.Clear()
+        TextBox5.Clear()
+        TextBox6.Clear()
+        TextBox7.Clear()
+        TextBox8.Clear()
+        TextBox9.Clear()
+        TextBox10.Clear()
+        TextBox11.Clear()
+        TextBox12.Clear()
+        TextBox13.Clear()
+        TextBox14.Clear()
+        TextBox15.Clear()
+        TextBox16.Clear()
+        TextBox17.Clear()
+        TextBox18.Clear()
+        TextBox19.Clear()
+        TextBox21.Clear()
+        TextBox22.Clear()
+        TextBox25.Clear()
+        TextBox27.Clear()
+        TextBox28.Clear()
+        TextBox29.Clear()
+        ComboBox1.Text = ""
+        ComboBox2.Text = ""
+        ComboBox3.Text = ""
+        ComboBox4.Text = ""
+        ComboBox5.Text = ""
+        ComboBox6.Text = ""
+        ComboBox7.Text = ""
+        ComboBox8.Text = ""
+        ComboBox9.Text = ""
+        ComboBox10.Text = ""
+        ComboBox11.Text = ""
+    End Sub
+
+    Private Sub ToolStripTextBox3_Click(sender As Object, e As EventArgs) Handles ToolStripTextBox3.Click
+        MessageBox.Show("F1 Challenge 99-02 by ISI" & vbCrLf & "Config Editor by haunetal1990", "Credits", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    End Sub
+
+    Private Sub ExitToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem1.Click
+        Application.Exit()
+    End Sub
+
+    Private Sub TemplateConfiginiToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TemplateConfiginiToolStripMenuItem.Click
+        Textbox1.Text = "SEASONDATA\"
+        Textbox2.Text = "AUDIO\"
+        TextBox3.Text = "AUDIO\VEHICLE\"
+        TextBox4.Text = "OPTIONS\ANIM\"
+        TextBox5.Text = "OPTIONS\FLAGS\"
+        TextBox11.Text = "AUDIO\OPTIONS\"
+        TextBox13.Text = "OPTIONS\"
+        TextBox8.Text = "REPLAYS\"
+        TextBox14.Text = "MOVIES\"
+        TextBox12.Text = "CIRCUITS\"
+        TextBox16.Text = "VEHICLES\"
+        TextBox18.Text = "DRIVERS\"
+        TextBox15.Text = "LOG\"
+        TextBox19.Text = "SAVE\"
+        TextBox17.Text = "AUDIO\MUSIC\"
+        TextBox25.Text = "DEVFILES\CAMED\"
+        TextBox6.Text = "Y:\"
+        TextBox7.Text = ""
+        ComboBox1.Text = "Off"
+        TextBox9.Text = "600"
+        TextBox10.Text = "1.000000"
+    End Sub
+
+    Private Sub TextBox27_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox27.KeyPress
+        Select Case Asc(e.KeyChar)
+            Case 48 To 57, 8, 32
+                ' Zahlen, Backspace und Space zulassen
+            Case Else
+                ' alle anderen Eingaben unterdrücken
+                e.Handled = True
+        End Select
+    End Sub
+
+    Private Sub ComboBox3_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ComboBox3.KeyPress
+        Select Case Asc(e.KeyChar)
+            Case 48 To 57, 8, 32
+                ' Zahlen, Backspace und Space zulassen
+            Case Else
+                ' alle anderen Eingaben unterdrücken
+                e.Handled = True
+        End Select
+    End Sub
+
+    Private Sub TextBox21_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox21.KeyPress
+        Select Case Asc(e.KeyChar)
+            Case 48 To 57, 8, 32
+                ' Zahlen, Backspace und Space zulassen
+            Case Else
+                ' alle anderen Eingaben unterdrücken
+                e.Handled = True
+        End Select
+    End Sub
+
+    Private Sub TextBox23_KeyPress(sender As Object, e As KeyPressEventArgs)
+        Select Case Asc(e.KeyChar)
+            Case 48 To 57, 8, 32
+                ' Zahlen, Backspace und Space zulassen
+            Case Else
+                ' alle anderen Eingaben unterdrücken
+                e.Handled = True
+        End Select
+    End Sub
+
+    Private Sub ComboBox9_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ComboBox9.KeyPress
+        Select Case Asc(e.KeyChar)
+            Case 48 To 57, 8, 32
+                ' Zahlen, Backspace und Space zulassen
+            Case Else
+                ' alle anderen Eingaben unterdrücken
+                e.Handled = True
+        End Select
+    End Sub
+
+    Private Sub ComboBox10_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ComboBox10.KeyPress
+        Select Case Asc(e.KeyChar)
+            Case 48 To 57, 8, 32
+                ' Zahlen, Backspace und Space zulassen
+            Case Else
+                ' alle anderen Eingaben unterdrücken
+                e.Handled = True
+        End Select
+    End Sub
+
+    Private Sub TextBox28_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox28.KeyPress
+        Select Case Asc(e.KeyChar)
+            Case 48 To 57, 8, 32
+                ' Zahlen, Backspace und Space zulassen
+            Case Else
+                ' alle anderen Eingaben unterdrücken
+                e.Handled = True
+        End Select
+    End Sub
+
+    Private Sub ComboBox2_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ComboBox2.KeyPress
+        Select Case Asc(e.KeyChar)
+            Case 48 To 57, 8, 32
+                ' Zahlen, Backspace und Space zulassen
+            Case Else
+                ' alle anderen Eingaben unterdrücken
+                e.Handled = True
+        End Select
+    End Sub
+
+    Private Sub ComboBox4_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ComboBox4.KeyPress
+        Select Case Asc(e.KeyChar)
+            Case 48 To 57, 8, 32
+                ' Zahlen, Backspace und Space zulassen
+            Case Else
+                ' alle anderen Eingaben unterdrücken
+                e.Handled = True
+        End Select
+    End Sub
+
+    Private Sub ComboBox5_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ComboBox5.KeyPress
+        Select Case Asc(e.KeyChar)
+            Case 48 To 57, 8, 32
+                ' Zahlen, Backspace und Space zulassen
+            Case Else
+                ' alle anderen Eingaben unterdrücken
+                e.Handled = True
+        End Select
+    End Sub
+
+    Private Sub ComboBox6_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ComboBox6.KeyPress
+        Select Case Asc(e.KeyChar)
+            Case 48 To 57, 8, 32
+                ' Zahlen, Backspace und Space zulassen
+            Case Else
+                ' alle anderen Eingaben unterdrücken
+                e.Handled = True
+        End Select
+    End Sub
+
+    Private Sub ComboBox7_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ComboBox7.KeyPress
+        Select Case Asc(e.KeyChar)
+            Case 48 To 57, 8, 32
+                ' Zahlen, Backspace und Space zulassen
+            Case Else
+                ' alle anderen Eingaben unterdrücken
+                e.Handled = True
+        End Select
+    End Sub
+
+    Private Sub ComboBox8_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ComboBox8.KeyPress
+        Select Case Asc(e.KeyChar)
+            Case 48 To 57, 8, 32
+                ' Zahlen, Backspace und Space zulassen
+            Case Else
+                ' alle anderen Eingaben unterdrücken
+                e.Handled = True
+        End Select
+    End Sub
+
+    Private Sub TextBox9_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox9.KeyPress
+        Select Case Asc(e.KeyChar)
+            Case 48 To 57, 8, 32
+                ' Zahlen, Backspace und Space zulassen
+            Case Else
+                ' alle anderen Eingaben unterdrücken
+                e.Handled = True
+        End Select
+    End Sub
+
+    Private Sub ComboBox4_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox4.SelectedIndexChanged
+        If ComboBox4.Text = "1" Then
+            ComboBox7.Text = "1"
+            ComboBox2.Text = "1"
+            ComboBox5.Text = "1"
+        Else
+        End If
+    End Sub
+End Class
